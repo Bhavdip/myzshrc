@@ -130,10 +130,13 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # alias example='f() { echo Your arg was $1 };f'
-# alias example='f() { echo Your arg was $1 };f'
 
 
 ## git aliases
+
+##Discard everything permanently
+alias git.discard="git reset --hard"
+
 alias git.add="git add ."
 alias git.commit='f(){ git commit -m $1 };f'
 alias git.merge='f() { git merge --no-ff $1 };f'
