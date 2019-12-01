@@ -130,6 +130,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # alias example='f() { echo Your arg was $1 };f'
+# alias example='f() { echo Your arg was $1 };f'
 
 
 ## git aliases
