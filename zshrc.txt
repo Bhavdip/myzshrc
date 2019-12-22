@@ -8,6 +8,7 @@ export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH="$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
 export PATH="export PATH=$PATH:/Applications/SonarScanner/bin"
 export PATH="export PATH=$PATH:/Applications/SonarQube/bin"
+export PATH="$HOME/.fastlane/bin:$PATH"
 
 
 # Path to your oh-my-zsh installation.
@@ -140,16 +141,29 @@ alias zshrc="code ~/.zshrc" ## ~/.zshrc is symobilk link to your directory
 ## git aliases
 
     ##Discard everything permanently
-alias git.discard="git reset --hard"
 
+# When using git reset --hard HEAD~1 you will lose all uncommited files in current branch
+# and changes in addition to the changes introduced in the last commit will also lost.
+alias git.discard="git reset --hard~1"
+
+#git reset --soft HEAD~1
+## When using git reset --soft HEAD~1
+## you will remove the last commit from the current branch, but the file changes will stay in your working tree.
+## Also the changes will stay on your index, so following with a git commit will create a commit with the exact
+## same changes as the commit you "removed" before.
+alias git.undo.last="git reset --soft HEAD~1"
+
+    ##Git delete branch
+alias git.delete="f(){ git branch -d $1 };f"
 alias git.add="git add ."
 alias git.commit='f(){ git commit -m $1 };f'
 alias git.merge='f() { git merge --no-ff $1 };f'
 alias git.checkout="git checkout"
-alias git.checkout.b="git checkout -b"
+alias git.checkout.new="git checkout -b"
 alias git.status="git status"
-alias git.pull="git pull"
-alias git.pull.rebase="git pull --rebase origin"
+alias git.pull="git pull --verbose $1"
+alias git.pull.nocommit="git pull --verbose --no-commit $1"
+alias git.pull.rebase="git pull --verbose --rebase origin"
 alias git.fetch="git fetch"
 alias git.fetchall="git fetch --all";
 alias git.fetch.origin="git fetch origin"
@@ -157,15 +171,19 @@ alias git.push="git push"
 alias git.diff="git diff"
 alias git.add="git add ."
 alias git.branch="git branch"
-alias git.log.1="git log --oneline"
-alias git.log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
+alias git.show.log.oneline="git log --oneline"
+alias git.show.log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches"
 
 #Jest
-alias jest.open-coverage="open ./coverage/lcov-report/index.html"
+## This will create the report under that directory
+alias jest.test="jest --coverage --coverageDirectory=coverage/jest"
+alias jest.test-u="jest -u --coverage --coverageDirectory=coverage/jest"
+alias jest.watch="jest --verbose --watch"
+alias jest.open-coverage="open ./coverage/jest/lcov-report/index.html"
 
 ##sonarQube
 alias sonar.start="sh /Applications/SonarQube/bin/macosx-universal-64/sonar.sh console"
-alias sonar.scan="sonar.scanner"
+alias sonar.scan="sonar-scanner"
 
 #MacOX
 alias topten="history | commands | sort -rn | head"
@@ -181,6 +199,9 @@ alias clr="clear"
 ## npm aliases
 alias ni="npm install"
 
+## Mac command
+alias ios-devices="xcrun instruments -s devices"
+alias run-myapp="react-native run-ios --device Bhavdip's iPhone"
 
 #####
 #####
@@ -203,3 +224,5 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs)
 
 POWERLEVEL9K_MODE='nerdfont-complete'
 source ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
