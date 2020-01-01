@@ -153,17 +153,26 @@ alias git.discard="git reset --hard~1"
 ## same changes as the commit you "removed" before.
 alias git.undo.last="git reset --soft HEAD~1"
 
-    ##Git delete branch
+##Git delete branch
 alias git.delete="f(){ git branch -d $1 };f"
+
 alias git.add="git add ."
 alias git.commit='f(){ git commit -m $1 };f'
+### Git merge no fast forward means when we merge the dev branch into out feature branch
+### you may notice there is merge commit created by git if you don't want that you can use
+### this option call fast fast that will no create the new commit of merge and merge the latest code into your feature branch
 alias git.merge='f() { git merge --no-ff $1 };f'
 alias git.checkout="git checkout"
 alias git.checkout.new="git checkout -b"
 alias git.status="git status"
-alias git.pull="git pull --verbose $1"
+alias git.pull="f(){ git pull --verbose $1 };f"
 alias git.pull.nocommit="git pull --verbose --no-commit $1"
-alias git.pull.rebase="git pull --verbose --rebase origin"
+### This cmd will help when you are working on the branch(ex dev) and other dev people also working on the
+### same branch(dev) now it is good practics to take the latest update inshort period.For that if use basic pull
+### cmd it will pull/fetch other dev code on top of you code.In history your commit will show after other dev code
+### hence if you want to keep your code on top of other dev changes use rebase.
+### ONLY USE PULL FOR THE SAME BRANCH
+alias git.pull.rebase="git pull --verbose --rebase"
 alias git.fetch="git fetch"
 alias git.fetchall="git fetch --all";
 alias git.fetch.origin="git fetch origin"
