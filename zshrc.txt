@@ -1,13 +1,13 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk-11.0.5.jdk/Contents/Home"
+export JAVA_HOME="/Applications/Android Studio.app/Contents/jre/Contents/Home"
 
-# /Users/ac518/Library/Android/sdk
-export ANDROID_HOME="$HOME/Library/Android/sdk"
+# /Users/AC518/Library/Android/sdk
+export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH="$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$PATH"
-export PATH="/Applications/SonarScanner/bin:$PATH"
-export PATH="/Applications/SonarQube/bin:$PATH"
+export PATH="export PATH=$PATH:/Applications/SonarScanner/bin"
+export PATH="export PATH=$PATH:/Applications/SonarQube/bin"
 export PATH="$HOME/.fastlane/bin:$PATH"
 
 
@@ -87,6 +87,7 @@ yarn
 vscode
 web-search
 macos
+zsh-autosuggestions
 Last-working-dir
 )
 
@@ -109,20 +110,32 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+
+
 #########
 # aliases
 ########
 
+#Example
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+# alias example='f() { echo Your arg was $1 };f'
+
+#VScode
+code () { VSCODE_CWD="$PWD" open -n -b "com.microsoft.VSCode" --args $* ;}
+
 #zsharc
 alias zshrc="code ~/.zshrc" ## ~/.zshrc is symobilk link to your directory
 
-####
 ## git aliases
-####
+##Discard everything permanently
 
 # When using git reset --hard HEAD~1 you will lose all uncommited files in current branch
 # and changes in addition to the changes introduced in the last commit will also lost.
-
 alias git.discard="git reset --hard~1"
 
 #git reset --soft HEAD~1
@@ -130,9 +143,26 @@ alias git.discard="git reset --hard~1"
 ## you will remove the last commit from the current branch, but the file changes will stay in your working tree.
 ## Also the changes will stay on your index, so following with a git commit will create a commit with the exact
 ## same changes as the commit you "removed" before.
-
 alias git.undo.last="git reset --soft HEAD~1"
 
+##Git delete branch
+alias git.delete="f(){ git branch -d $1 };f"
+
+alias git.add="git add ."
+alias git.commit='f(){ git commit -m $1 };f'
+### Git merge no fast forward means when we merge the dev branch into out feature branch
+### you may notice there is merge commit created by git if you don't want that you can use
+### this option call fast fast that will no create the new commit of merge and merge the latest code into your feature branch
+alias git.merge='f() { git merge --no-ff $1 };f'
+alias git.checkout="git checkout"
+alias git.checkout.new="git checkout -b"
+alias git.status="git status"
+alias git.pull="f(){ git pull --verbose $1 };f"
+alias git.pull.nocommit="git pull --verbose --no-commit $1"
+### This cmd will help when you are working on the branch(ex dev) and other dev people also working on the
+### same branch(dev) now it is good practics to take the latest update inshort period.For that if use basic pull
+### cmd it will pull/fetch other dev code on top of you code.In history your commit will show after other dev code
+### hence if you want to keep your code on top of other dev changes use rebase.
 ### ONLY USE PULL FOR THE SAME BRANCH
 alias git.pull.rebase="git pull --verbose --rebase"
 alias git.fetch="git fetch"
@@ -173,6 +203,8 @@ alias ni="npm install"
 ## Mac command
 alias ios-devices="xcrun instruments -s devices"
 alias run-myapp="react-native run-ios --device Bhavdip's iPhone"
+
+alias open-android="open -a /Applications/Android\ Studio.app"
 
 #####
 #####
